@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+
+
+    <link href="~/Content/SharedCss/navbar.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+
+            <div class="logo"><a class="t" href="/">ResearchGate</a></div>
+
+
+            <div>
+                @using (Html.BeginForm("search", "Home", FormMethod.Post))
+                {
+                    <div class="sf">
+                        <div class="textBoxSearch">
+                            <input type="text" placeholder="Search.." name="search" class="search_input">
+                        </div>
+                        <div class="searchButtons">
+                            <button name="option" value="name" class="search_btn"> name </button>
+                            <button name="option" value="email" class="search_btn"> email </button>
+                            <button name="option" value="University" class="search_btn"> university </button>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            <ul class="nav-links">
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="/Paper">Create Paper</a>
+                    </li>
+                    <li>
+                        <a href="/Requests">Requests</a>
+                    </li>
+                    <li>
+                        <a href="/Profile/@User.Identity.Name">My Profile</a>
+                    </li>
+                    <li>
+                        <a href="/Account/Logout">Log out</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="log"><a href="/login">Log in</a></li>
+                    <li class="sign"><a href="/register">Sign up</a></li>
+                }
+
+
+            </ul>
+        </nav>
+    </header>
+
+
+    @RenderBody()
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿@model List<ResearchGate.Models.AuthorPapers>
+
+@{
+    ViewBag.Title = "Home";
+}
+<link href="~/Content/Designs/Papers.css" rel="stylesheet" />
+
+
+@using (Html.BeginForm("DownloadFile", "Paper", FormMethod.Post))
+{
+    <input type="hidden" id="hfFileId" name="FileId" />
+    <input type="submit" id="btnDownload" value="Download" style="display:none" />
+}
+
+<div class="container">
+    @foreach (var paper in Model)
+    {
+        <div class="paperContainer">
+            <div class="paperLeftHand">
+                <div class="paperName"><strong>Paper Name: </strong>@paper.Paper.PaperName</div>
+
+
+                <div class="paperDescription"><strong>Description:</strong> @paper.Paper.PaperDescription</div>
+            </div>
+
+
+            <div class="paperRightHand">
+                <strong>Authors:</strong>
+                @foreach (var a in paper.Paper.AuthorPapers)
+                {
+                    <a href="/profile/@a.Author.Username">@a.Author.FirstName @a.Author.LastName</a>
+                }
+            </div>
+
+            <div>
+                <a href="javascript:;" onclick="DownloadPaper(@paper.Paper.PaperId)">Download</a>
+            </div>
+
+            <div>
+                <a href="Paper/PaperDetails/@paper.PaperId">Go to paper</a>
+            </div>
+
+            <div>
+                <a href="Paper/EditPaper/@paper.Paper.PaperId">Edit</a>
+            </div>
+
+        </div>
+    }
+
+</div>
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    function DownloadPaper(fileId) {
+        $("#hfFileId").val(fileId);
+        $("#btnDownload")[0].click();
+    };
+</script>
